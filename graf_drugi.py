@@ -13,6 +13,12 @@ g = Graph.Bipartite(
     arrangement,
     [(0, 5), (1, 6), (1, 7), (2, 5), (2, 8), (3, 6), (4, 5), (4, 6)]
 )
+
+if g.is_bipartite():
+    print("Graf jest dwudzielny.")
+else:
+    print("Graf nie jest dwudzielny.")
+
 g.vs["label"] = students + classes
 g.vs["color"] = ["pink" if x else "green" for x in arrangement]
 
@@ -20,6 +26,9 @@ g.vs["color"] = ["pink" if x else "green" for x in arrangement]
 print("Analiza skupień:")
 print(g.community_edge_betweenness().as_clustering())
 print(g.edge_betweenness())
+
+# Badanie specyficzności
+print(g.modularity(membership=g.community_optimal_modularity()))
 
 EDGE_DIVIDE_RATIO = 5
 edge_widths = list(map(lambda x: x / EDGE_DIVIDE_RATIO, g.edge_betweenness()))
